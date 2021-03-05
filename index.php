@@ -1,4 +1,6 @@
 <?php
+include_once './libs/default.php';
+
 $is_auth = rand(0, 1);
 
 $user_name = 'Олег'; // укажите здесь ваше имя
@@ -112,7 +114,7 @@ $two_cats = [
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount"><?=$v['cost']?></span>
-                            <span class="lot__cost"><?=$v['cost']?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=format_cost($v['cost'])?></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
