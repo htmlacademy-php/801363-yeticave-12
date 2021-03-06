@@ -1,4 +1,12 @@
 <?php
+function format_time_lost($data_end) {
+    $datetime1 = new DateTime($data_end);
+    $datetime2 = new DateTime();
+    $interval = $datetime1->diff($datetime2);
+    return [$interval->format('%H%'), $interval->format('%i%')];
+//    return $interval->format('%H%').':'.$interval->format('%i%');
+}
+
 function format_cost($cost=0) {
     $ans = ceil($cost);
     if($ans >= 1000) {

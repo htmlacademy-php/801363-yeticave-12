@@ -17,7 +17,9 @@
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <?php foreach($two_cats as $k=>$v): ?>
+            <?php foreach($two_cats as $k=>$v) {
+                $end_time = format_time_lost($v['date_end']);
+                ?>
                 <li class="lots__item lot" data-end="<?=out_secur($v['date_end'])?>">
                     <div class="lot__image">
                         <img src="<?=out_secur($v['img'])?>" width="350" height="260" alt="">
@@ -30,13 +32,13 @@
                                 <span class="lot__amount"><?=out_secur($v['cost'])?></span>
                                 <span class="lot__cost"><?=format_cost($v['cost'])?></span>
                             </div>
-                            <div class="lot__timer timer">
-                                12:23
+                            <div class="lot__timer timer <?php if((int)$end_time[0] < 1) { echo 'timer--finishing'; } ?>">
+                                <?=$end_time[0].':'.str_pad($end_time[1], 2, "0", STR_PAD_LEFT)?>
                             </div>
                         </div>
                     </div>
                 </li>
-            <?php endforeach; ?>
+            <?php } ?>
         </ul>
     </section>
 </main>
