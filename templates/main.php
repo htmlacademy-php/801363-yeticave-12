@@ -18,7 +18,7 @@
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
             <?php foreach($two_cats as $k=>$v): ?>
-                <li class="lots__item lot">
+                <li class="lots__item lot" data-end="<?=out_secur($v['date_end'])?>">
                     <div class="lot__image">
                         <img src="<?=out_secur($v['img'])?>" width="350" height="260" alt="">
                     </div>
