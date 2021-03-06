@@ -5,7 +5,7 @@
         <ul class="promo__list">
             <?php foreach($cats as $v): ?>
                 <!--заполните этот список из массива категорий-->
-                <li class="promo__item promo__item--boards">
+                <li class="promo__item promo__item--<?=$v['code']?>">
                     <a class="promo__link" href="pages/all-lots.html"><?=out_secur($v['name'])?></a>
                 </li>
             <?php endforeach; ?>
