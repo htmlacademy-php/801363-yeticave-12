@@ -30,20 +30,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categorys` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-'
+  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-',
+  `code` varchar(30) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `categorys`
 --
 
-INSERT INTO `categorys` (`id`, `name`) VALUES
-(1, 'Доски и лыжи'),
-(2, 'Крепления'),
-(3, 'Ботинки'),
-(4, 'Одежда'),
-(5, 'Инструменты'),
-(6, 'Разное');
+INSERT INTO `categorys` (`id`, `name`, `code`) VALUES
+(1, 'Доски и лыжи', 'boards'),
+(2, 'Крепления', 'attachment'),
+(3, 'Ботинки', 'boots'),
+(4, 'Одежда', 'clothing'),
+(5, 'Инструменты', 'tools'),
+(6, 'Разное', 'other');
 
 -- --------------------------------------------------------
 

@@ -2,13 +2,13 @@ INSERT INTO `users` (`id`, `login`, `pass`, `descr`) VALUES
 (1, 'robin', 'none', NULL),
 (2, 'user', 'none', 'новый пользователь');
 
-INSERT INTO `categorys` (`id`, `name`) VALUES
-(1, 'Доски и лыжи'),
-(2, 'Крепления'),
-(3, 'Ботинки'),
-(4, 'Одежда'),
-(5, 'Инструменты'),
-(6, 'Разное');
+INSERT INTO `categorys` (`id`, `name`, `code`) VALUES
+(1, 'Доски и лыжи', 'boards'),
+(2, 'Крепления', 'attachment'),
+(3, 'Ботинки', 'boots'),
+(4, 'Одежда', 'clothing'),
+(5, 'Инструменты', 'tools'),
+(6, 'Разное', 'other');
 
 INSERT INTO `lotes` (`id`, `id_parent`, `name`, `cat`, `begin_cost`, `cost`, `img`, `date_end`) VALUES
 (1, 2, '2014 Rossignol District Snowboard', 1, 10999, 10999, 'img/lot-1.jpg', '2021-03-10 12:20:00'),
