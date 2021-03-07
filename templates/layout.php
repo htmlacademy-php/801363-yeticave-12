@@ -43,6 +43,7 @@
     </header>
 
 <?=include_template('main.php', ['cats'=>$cats, 'two_cats'=>$two_cats])?>
+<?//=include_template('one_lot.php', ['cats'=>$cats, 'two_cats'=>$two_cats])?>
 
 </div>
 
