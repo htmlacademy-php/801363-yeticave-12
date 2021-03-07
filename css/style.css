@@ -1238,3 +1238,10 @@ input:invalid .form__error{
 .rates__item--end {
   opacity: 0.4;
 }
+
+.error404 {
+  min-height: 58vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

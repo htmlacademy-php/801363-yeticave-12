@@ -1,35 +1,28 @@
+<?php
+$end_time = format_time_lost($two_cats['date_end']);
+$end_time[0] = str_pad($end_time[0], 2, "0", STR_PAD_LEFT);
+$end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
+?>
+
 <div class="page-wrapper">
   <main>
     <nav class="nav">
       <ul class="nav__list container">
-        <li class="nav__item">
-          <a href="all-lots.html">Доски и лыжи</a>
-        </li>
-        <li class="nav__item">
-          <a href="all-lots.html">Крепления</a>
-        </li>
-        <li class="nav__item">
-          <a href="all-lots.html">Ботинки</a>
-        </li>
-        <li class="nav__item">
-          <a href="all-lots.html">Одежда</a>
-        </li>
-        <li class="nav__item">
-          <a href="all-lots.html">Инструменты</a>
-        </li>
-        <li class="nav__item">
-          <a href="all-lots.html">Разное</a>
-        </li>
+          <?php foreach($cats as $v): ?>
+            <li class="nav__item">
+              <a href="all-lots.html"><?=$v['name']?></a>
+            </li>
+          <?php endforeach; ?>
       </ul>
     </nav>
     <section class="lot-item container">
-      <h2>DC Ply Mens 2016/2017 Snowboard</h2>
+      <h2><?=$two_cats['name']?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">
           <div class="lot-item__image">
-            <img src="../img/lot-image.jpg" width="730" height="548" alt="Сноуборд">
+            <img src="../<?=$two_cats['img']?>" width="730" height="548" alt="<?=$two_cats['name']?>">
           </div>
-          <p class="lot-item__category">Категория: <span>Доски и лыжи</span></p>
+          <p class="lot-item__category">Категория: <span><?=$two_cats['CAT_NAME']?></span></p>
           <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
             снег
             мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
@@ -43,9 +36,13 @@
         </div>
         <div class="lot-item__right">
           <div class="lot-item__state">
-            <div class="lot-item__timer timer">
-10:54
-</div>
+            <div class="lot-item__timer timer <?php if((int)$end_time[0] < 1) { echo 'timer--finishing'; } ?>">
+                <?php if((int)$end_time[0] < 24) { ?>
+                <?=$end_time[0].':'.$end_time[1]?>
+                <?php } else { ?>
+                > <?=floor($end_time[0]/24)?> сут.
+                <?php } ?>
+            </div>
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>

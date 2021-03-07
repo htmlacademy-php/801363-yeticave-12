@@ -50,24 +50,37 @@ if($ask->num_rows) {
     }
 }
 
-$ask = q("SELECT lotes.id, lotes.name, lotes.img, lotes.id_parent, lotes.cat, lotes.begin_cost, lotes.cost, lotes.date_end, categorys.id AS CAT_ID, categorys.name AS CAT_NAME FROM `lotes`
-    LEFT JOIN `categorys`
-        ON lotes.cat = categorys.id
-        WHERE lotes.date_end >= '".date('Y-m-d H:i:s')."'
-        ORDER BY lotes.date_end ASC
-    ");
-
 $two_cats = [];
-if($ask->num_rows) {
-    while($row = $ask->fetch_assoc())  {
-        $two_cats[] = $row;
-    }
+
+switch($_GET['module']) {
+    case 'main':
+        $ask = q("SELECT lotes.id, lotes.name, lotes.img, lotes.id_parent, lotes.cat, lotes.begin_cost, lotes.cost, lotes.date_end, categorys.id AS CAT_ID, categorys.name AS CAT_NAME FROM `lotes`
+        LEFT JOIN `categorys`
+            ON lotes.cat = categorys.id
+            WHERE lotes.date_end >= '".date('Y-m-d H:i:s')."'
+            ORDER BY lotes.date_end ASC
+        ");
+
+        if($ask->num_rows) {
+            while($row = $ask->fetch_assoc())  {
+                $two_cats[] = $row;
+            }
+        }
+        break;
+    case 'lot':
+        $ask = q("SELECT lotes.id, lotes.name, lotes.img, lotes.id_parent, lotes.cat, lotes.begin_cost, lotes.cost, lotes.date_end, categorys.id AS CAT_ID, categorys.name AS CAT_NAME FROM `lotes`
+        LEFT JOIN `categorys`
+            ON lotes.cat = categorys.id
+            WHERE lotes.id = ".(int)$_GET['page']."
+            LIMIT 1
+        ");
+        if($ask->num_rows) {
+            $two_cats = $ask->fetch_assoc();
+        } else {
+            header('Location: /404');
+        }
+        break;
 }
 
-foreach($two_cats as $k=>$v) {
-    if(strtotime($v['date_end']) < strtotime(date('Y-m-d H:i:s'))) {
-        unset($two_cats[$k]);
-    }
-}
 
 echo include_template('layout.php', ['content'=>$_GET['module'], 'page_name'=>$page_name, 'user_name'=>$user_name, 'is_auth'=>$is_auth, 'cats'=>$cats, 'two_cats'=>$two_cats]);
