@@ -26,7 +26,7 @@
                     </div>
                     <div class="lot__info">
                         <span class="lot__category"><?=out_secur($v['CAT_NAME'])?></span>
-                        <h3 class="lot__title"><a class="text-link" href="/lot/"><?=out_secur($v['name'])?></a></h3>
+                        <h3 class="lot__title"><a class="text-link" href="/lot/<?=$v['id']?>"><?=out_secur($v['name'])?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
                                 <span class="lot__amount"><?=format_cost($v['begin_cost'])?></span>

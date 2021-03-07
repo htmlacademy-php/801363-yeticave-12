@@ -919,6 +919,7 @@ input:invalid .form__error{
 
 .lot-item {
   padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .lot-item h2 {
