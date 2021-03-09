@@ -1,13 +1,44 @@
 <?php
+//wtf($_POST);
 if(isset($_POST['submit-lot'])) {
     if(empty($_POST['lot-name'])) { $errors['lot-name'] = true; }
-    if(empty($_POST['category']) || $_POST['category'] === 'Выберите категорию') { $errors['category'] = true; }
+    if(empty($_POST['category']) || (int)$_POST['category'] == -1) { $errors['category'] = true; }
     if(empty($_POST['message'])) { $errors['message'] = true; }
-    if(empty($_POST['lot-img'])) { $errors['lot-img'] = true; }
     if(empty($_POST['lot-rate']) || (int)$_POST['lot-rate'] == 0) { $errors['lot-rate'] = true; }
     if(empty($_POST['lot-step']) || (int)$_POST['lot-step'] == 0) { $errors['lot-step'] = true; }
     if(empty($_POST['lot-date']) || $_POST['lot-date'] <= date('Y-m-d')) { $errors['lot-date'] = true; }
 
+    $accept = ['image/jpeg', 'image/jpg', 'image/png'];
+
+    if(!isset($_FILES) || $_FILES['lot-img']['error'] !== 0 || !in_array(mime_content_type($_FILES['lot-img']['tmp_name']), $accept)) {
+        $errors['lot-img'] = true;
+    }
+
+    if(!isset($errors)) {
+        $exp = explode('/', mime_content_type($_FILES['lot-img']['tmp_name']))[1];
+        $id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : rand(100000, 999999);  // тянем id если есть
+        $name = date('Ymd-His') . '_id-' . $id . '-' . rand(100000, 999999) . '.' . mb_strtolower($exp);
+
+        if(move_uploaded_file($_FILES['lot-img']['tmp_name'], './img/'.$name)) {
+            q("
+            INSERT INTO `lotes` SET
+            `id_parent`            = -1,
+            `name`                 = '".db_secur($_POST['lot-name'])."',
+            `cat`                  = ".(int)$_POST['category'].",
+            `text`                 = '".db_secur($_POST['message'])."',
+            `begin_cost`           = '".db_secur($_POST['lot-rate'])."',
+            `cost`                 = '".db_secur($_POST['lot-step'])."',
+            `date_end`             = '".db_secur($_POST['lot-date'])."',
+            `img`                  = 'img/".$name."'
+            ");
+
+            $id = (int)DB::_()->insert_id;  // последний запрос последний id
+            header('Location: /lot/'.$id);
+            exit;
+        }
+    }
+
+//    wtf($_FILES, 1);
 }
 ?>
 
@@ -21,7 +52,7 @@ if(isset($_POST['submit-lot'])) {
             <?php endforeach; ?>
         </ul>
     </nav>
-    <form class="form form--add-lot container <?php if(isset($errors)) { echo 'form--invalid'; } ?>" action="/add" method="post"> <!-- form--invalid -->
+    <form class="form form--add-lot container <?php if(isset($errors)) { echo 'form--invalid'; } ?>" enctype="multipart/form-data" action="/add" method="post"> <!-- form--invalid -->
         <h2>Добавление лота</h2>
         <div class="form__container-two">
             <div class="form__item <?php if(isset($errors['lot-name'])) { echo 'form__item--invalid'; } ?>"> <!-- form__item--invalid -->
@@ -32,9 +63,9 @@ if(isset($_POST['submit-lot'])) {
             <div class="form__item <?php if(isset($errors['category'])) { echo 'form__item--invalid'; } ?>">
                 <label for="category">Категория <sup>*</sup></label>
                 <select id="category" name="category">
-                    <option>Выберите категорию</option>
+                    <option value="-1">Выберите категорию</option>
                     <?php foreach($cats as $v):?>
-                    <option <?php if(isset($_POST['category']) && $_POST['category'] === $v['name']) { echo 'selected'; } ?>><?=$v['name']?></option>
+                    <option value="<?=(int)$v['id']?>" <?php if(isset($_POST['category']) && $_POST['category'] === $v['id']) { echo 'selected'; } ?>><?=$v['name']?></option>
                     <?php endforeach; ?>
                 </select>
                 <span class="form__error">Выберите категорию</span>
