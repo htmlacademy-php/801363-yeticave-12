@@ -74,7 +74,7 @@ function trimAll($var) {
 }
 
 function crypter($var) {
-    $salt1 = 'v5kmmge423tttrmgpo5g7h40';
-    $salt2 = 'fn21kfkr95legdf32ls657v';
+    $salt1 = 'v5kmj4d9K&k3;dee7h40';
+    $salt2 = 'k4pPN^lP(h3f32ls657v';
     return crypt(md5($salt2.$var.$salt1), $salt2);
 }

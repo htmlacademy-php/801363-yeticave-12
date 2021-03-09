@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once './config.php';
 include_once './libs/default.php';
 include_once './helpers.php';
@@ -37,8 +38,14 @@ if(empty($_GET['page'])) {
 //wtf($_GET);
 
 $page_name = 'Главная';
-$is_auth = rand(0, 1);
-$user_name = 'Олег'; // укажите здесь ваше имя
+
+if(isset($_SESSION['user'])) {
+    $is_auth = 1;
+    $user_name = 'Олег'; // укажите здесь ваше имя
+} else {
+    $is_auth = 0;
+}
+
 
 $cats = [];
 $ask = q("
@@ -77,7 +84,9 @@ switch($_GET['module']) {
         if($ask->num_rows) {
             $two_cats = $ask->fetch_assoc();
         } else {
+            header('HTTP/1.0 404 Not Found');
             header('Location: /404');
+            exit;
         }
         break;
 }

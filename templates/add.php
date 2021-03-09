@@ -44,13 +44,7 @@ if(isset($_POST['submit-lot'])) {
 
 <main>
     <nav class="nav">
-        <ul class="nav__list container">
-            <?php foreach($cats as $v): ?>
-            <li class="nav__item">
-                <a href="all-lots.html"><?=$v['name']?></a>
-            </li>
-            <?php endforeach; ?>
-        </ul>
+        <?=include_template('listCats.php', ['cats'=>$cats])?>
     </nav>
     <form class="form form--add-lot container <?php if(isset($errors)) { echo 'form--invalid'; } ?>" enctype="multipart/form-data" action="/add" method="post"> <!-- form--invalid -->
         <h2>Добавление лота</h2>

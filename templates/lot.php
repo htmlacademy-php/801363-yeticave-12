@@ -7,13 +7,7 @@ $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
 <div class="page-wrapper">
   <main>
     <nav class="nav">
-      <ul class="nav__list container">
-          <?php foreach($cats as $v): ?>
-            <li class="nav__item">
-              <a href="all-lots.html"><?=$v['name']?></a>
-            </li>
-          <?php endforeach; ?>
-      </ul>
+        <?=include_template('listCats.php', ['cats'=>$cats])?>
     </nav>
     <section class="lot-item container">
       <h2><?=$two_cats['name']?></h2>

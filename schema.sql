@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 09 2021 г., 15:05
+-- Время создания: Мар 09 2021 г., 20:17
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.2
 
@@ -86,6 +86,7 @@ INSERT INTO `lotes` (`id`, `id_parent`, `name`, `cat`, `text`, `begin_cost`, `co
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `email` varchar(30) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '-',
   `login` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'user',
   `pass` varchar(20) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'none',
   `descr` text COLLATE utf8mb4_general_ci
@@ -95,9 +96,10 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `pass`, `descr`) VALUES
-(1, 'robin', 'none', NULL),
-(2, 'user', 'none', 'новый пользователь');
+INSERT INTO `users` (`id`, `email`, `login`, `pass`, `descr`) VALUES
+(1, 'vohuanrok@mail.ru', 'robin', 'k4yKmL7Wmqoog', NULL),
+(2, 'user@mail.by', 'user', 'none', 'новый пользователь'),
+(3, 'robinstone2011@gmail.com', 'Robin', 'k4yKmL7Wmqoog', 'Я живу дома ))');
 
 --
 -- Индексы сохранённых таблиц
@@ -141,7 +143,7 @@ ALTER TABLE `lotes`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
