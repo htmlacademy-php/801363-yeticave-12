@@ -17,16 +17,7 @@ $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
             <img src="../<?=$two_cats['img']?>" width="730" height="548" alt="<?=$two_cats['name']?>">
           </div>
           <p class="lot-item__category">Категория: <span><?=$two_cats['CAT_NAME']?></span></p>
-          <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
-            снег
-            мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
-            снаряд
-            отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
-            кэмбер
-            позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
-            просто
-            посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
-            равнодушным.</p>
+          <p class="lot-item__description"><?=out_secur($two_cats['text'])?></p>
         </div>
         <div class="lot-item__right">
           <div class="lot-item__state">
@@ -43,7 +34,7 @@ $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
                 <span class="lot-item__cost">10 999</span>
               </div>
               <div class="lot-item__min-cost">
-Мин. ставка <span>12 000 р</span>
+Мин. ставка <span><?=format_cost($two_cats['cost'])?></span>
               </div>
             </div>
             <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">

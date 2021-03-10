@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 10 2021 г., 19:18
+-- Время создания: Мар 10 2021 г., 22:41
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.2
 
@@ -69,14 +69,28 @@ CREATE TABLE `lotes` (
 --
 
 INSERT INTO `lotes` (`id`, `id_parent`, `name`, `cat`, `text`, `begin_cost`, `cost`, `img`, `date_end`) VALUES
-(1, 2, '2014 Rossignol District Snowboard', 1, NULL, 10999, 10999, 'img/lot-1.jpg', '2021-03-10 12:20:00'),
-(2, 1, 'DC Ply Mens 2016/2017 Snowboard', 1, NULL, 159999, 159999, 'img/lot-2.jpg', '2021-03-16 07:16:00'),
-(3, 1, 'Крепления Union Contact Pro 2015 года размер L/XL', 2, NULL, 8000, 8000, 'img/lot-3.jpg', '2021-03-10 21:22:00'),
-(4, 2, 'Ботинки для сноуборда DC Mutiny Charocal', 3, NULL, 10999, 10999, 'img/lot-4.jpg', '2021-03-11 09:47:00'),
-(5, 1, 'Куртка для сноуборда DC Mutiny Charocal', 4, NULL, 7500, 7500, 'img/lot-5.jpg', '2021-03-15 14:30:00'),
-(6, 1, 'Маска Oakley Canopy', 5, NULL, 5400, 5400, 'img/lot-6.jpg', '2021-03-15 21:12:00'),
-(7, 2, 'Коньки супер-пупер Charocal', 6, NULL, 12000, 12000, 'img/lot-7.jpg', '2021-03-10 22:28:00'),
-(12, -1, 'Велосипедные педали', 3, 'Что-то с чем-то', 12000, 1, 'img/20210309-145016_id-125245-641685.png', '2021-03-10 00:00:00');
+(1, 2, '2014 Rossignol District Snowboard', 1, NULL, 10999, 200, 'img/lot-1.jpg', '2021-03-11 12:20:00'),
+(2, 1, 'DC Ply Mens 2016/2017 Snowboard', 1, NULL, 159999, 50, 'img/lot-2.jpg', '2021-03-16 07:16:00'),
+(3, 1, 'Крепления Union Contact Pro 2015 года размер L/XL', 2, NULL, 8000, 20, 'img/lot-3.jpg', '2021-03-12 21:22:00'),
+(4, 2, 'Ботинки для сноуборда DC Mutiny Charocal', 3, NULL, 10999, 100, 'img/lot-4.jpg', '2021-03-11 09:47:00'),
+(5, 1, 'Куртка для сноуборда DC Mutiny Charocal', 4, NULL, 7500, 110, 'img/lot-5.jpg', '2021-03-15 14:30:00'),
+(6, 1, 'Маска Oakley Canopy', 5, NULL, 5400, 10, 'img/lot-6.jpg', '2021-03-15 21:12:00'),
+(7, 2, 'Коньки супер-пупер Charocal', 6, NULL, 12000, 25, 'img/lot-7.jpg', '2021-03-11 22:28:00'),
+(12, -1, 'Велосипедные педали', 3, 'Что-то с чем-то', 12000, 20, 'img/20210309-145016_id-125245-641685.png', '2021-03-12 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `rates`
+--
+
+CREATE TABLE `rates` (
+  `id` int(11) NOT NULL,
+  `datatime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lot_cost` int(11) NOT NULL DEFAULT '0',
+  `id_user` int(11) NOT NULL DEFAULT '-1',
+  `id_lot` int(11) NOT NULL DEFAULT '-1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -119,6 +133,12 @@ ALTER TABLE `lotes`
 ALTER TABLE `lotes` ADD FULLTEXT KEY `ix_name2text` (`name`,`text`);
 
 --
+-- Индексы таблицы `rates`
+--
+ALTER TABLE `rates`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
@@ -139,6 +159,12 @@ ALTER TABLE `categorys`
 --
 ALTER TABLE `lotes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT для таблицы `rates`
+--
+ALTER TABLE `rates`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
