@@ -35,13 +35,13 @@ if(empty($_GET['page'])) {
     $_GET['page'] = 'main';
 }
 
-//wtf($_GET);
+//wtf($_SESSION);
 
 $page_name = 'Главная';
 
 if(isset($_SESSION['user'])) {
     $is_auth = 1;
-    $user_name = 'Олег'; // укажите здесь ваше имя
+    $user_name = $_SESSION['user']['login']; // укажите здесь ваше имя
 } else {
     $is_auth = 0;
 }
