@@ -15,6 +15,7 @@ if(isset($_POST['submit-lot'])) {
     }
 
 
+
     if(!isset($errors)) {
         $exp = explode('/', mime_content_type($_FILES['lot-img']['tmp_name']))[1];
         $id = isset($_SESSION['user']) ? $_SESSION['user']['id'] : rand(100000, 999999);  // тянем id если есть
