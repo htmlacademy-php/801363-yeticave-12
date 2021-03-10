@@ -1,4 +1,9 @@
 <?php
+if($is_auth !== 0) {
+    header('Location: /');
+    exit;
+}
+
 if(isset($_POST['submit-login'])) {
     if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { $errors['email'] = 'Введите коректный e-mail'; }
     $ask = q("
@@ -52,6 +57,6 @@ if(isset($_POST['submit-login'])) {
         </div>
         <span class="form__error form__error--bottom">Пожалуйста, исправьте ошибки в форме.</span>
         <button type="submit" class="button" name="submit-login">Зарегистрироваться</button>
-        <a class="text-link" href="#">Уже есть аккаунт</a>
+        <a class="text-link" href="login">Уже есть аккаунт</a>
     </form>
 </main>

@@ -1,4 +1,8 @@
 <?php
+if($is_auth !== 1) {
+    header('Location: /login');
+    exit;
+}
 //wtf($_POST);
 if(isset($_POST['submit-lot'])) {
     if(empty($_POST['lot-name'])) { $errors['lot-name'] = true; }
