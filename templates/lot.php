@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['create-rate'], $_SESSION['user'], $_POST['cost'], $two_cats)) {
-    if((int)$_POST['cost'] < (int)$two_cats['cost'] + (int)$two_cats['begin_cost']) {
+    if($two_cats['date_end'] < date('Y-m-d H:i:s') || (int)$_POST['cost'] < (int)$two_cats['cost'] + (int)$two_cats['begin_cost']) {
         $errors['cost'] = true;
     } else {
         q("
@@ -53,9 +53,9 @@ if($ask->num_rows) {
           <p class="lot-item__description"><?=out_secur($two_cats['text'])?></p>
         </div>
         <div class="lot-item__right">
-          <div class="lot-item__state">
-            <div class="lot-item__timer timer <?php if((int)$end_time[0] < 1) { echo 'timer--finishing'; } ?>">
-                <?php if((int)$end_time[0] < 24) { ?>
+          <div class="lot-item__state" <?php if((int)$end_time[0] < 0) { echo 'style="pointer-events: none; opacity: 0.4;"'; } ?>>
+            <div class="lot-item__timer timer <?php if((int)$end_time[0] < 0) { echo 'timer--end'; } elseif((int)$end_time[0] < 1) { echo 'timer--finishing'; } ?>">
+                <?php if((int)$end_time[0] < 0) { echo 'Торги окончены'; } elseif((int)$end_time[0] < 24) { ?>
                 <?=$end_time[0].':'.$end_time[1]?>
                 <?php } else { ?>
                 > <?=floor($end_time[0]/24)?> сут.
