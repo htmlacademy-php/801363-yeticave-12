@@ -9,5 +9,7 @@
             "email": "vohuanrok@mail.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "swiftmailer/swiftmailer": "^6.2"
+    }
 }
