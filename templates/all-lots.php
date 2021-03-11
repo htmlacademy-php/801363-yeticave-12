@@ -60,6 +60,7 @@ if($ask->num_rows) {
             </ul>
             <?php } else { echo '<p style="font-size: 1.5em; color: red;">К сожалению ничего по этой категории нет... :(</p>'; } ?>
         </section>
+        <?php if(isset($arr) && count($arr)>9): ?>
         <ul class="pagination-list">
             <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
             <li class="pagination-item pagination-item-active"><a>1</a></li>
@@ -68,6 +69,7 @@ if($ask->num_rows) {
             <li class="pagination-item"><a href="#">4</a></li>
             <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
         </ul>
+        <?php endif; ?>
     </div>
 </main>
 

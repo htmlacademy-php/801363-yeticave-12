@@ -59,6 +59,7 @@ if(!empty($_GET['find']) && !empty($_GET['search'])) {
             <p style="color: red; font-size: 1.5em;">Ничего не найдено по вашему запросу... :(</p>
             <?php } ?>
         </section>
+        <?php if(isset($arr) && count($arr)>9): ?>
         <ul class="pagination-list">
             <li class="pagination-item pagination-item-prev"><a>Назад</a></li>
             <li class="pagination-item pagination-item-active"><a>1</a></li>
@@ -67,5 +68,6 @@ if(!empty($_GET['find']) && !empty($_GET['search'])) {
             <li class="pagination-item"><a href="#">4</a></li>
             <li class="pagination-item pagination-item-next"><a href="#">Вперед</a></li>
         </ul>
+        <?php endif; ?>
     </div>
 </main>
