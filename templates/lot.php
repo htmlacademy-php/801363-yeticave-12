@@ -1,10 +1,43 @@
 <?php
+if(isset($_POST['create-rate'], $_SESSION['user'], $_POST['cost'], $two_cats)) {
+    if((int)$_POST['cost'] < (int)$two_cats['cost'] + (int)$two_cats['begin_cost']) {
+        $errors['cost'] = true;
+    } else {
+        q("
+        UPDATE `lotes` SET `begin_cost` = ".(int)$_POST['cost']." WHERE
+        `id` = ".(int)$two_cats['id']."
+        ");
+
+        q("
+        INSERT INTO `rates` SET
+        `lot_cost`         = ".(int)$_POST['cost'].",
+        `id_user`          = ".(int)$_SESSION['user']['id'].",
+        `id_lot`           = ".(int)$two_cats['id']."
+        ");
+
+        unset($_POST);
+        header('Location: /lot/'.$two_cats['id']);
+        exit;
+    }
+}
+
 $end_time = format_time_lost($two_cats['date_end']);
 $end_time[0] = str_pad($end_time[0], 2, "0", STR_PAD_LEFT);
 $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
-?>
 
-<div class="page-wrapper">
+$ask = q("
+SELECT rates.*, users.id AS USER_ID, users.login FROM `rates`
+LEFT JOIN `users`
+ON rates.id_user = users.id
+WHERE `id_lot` = ".(int)$two_cats['id']." ORDER BY `datatime` DESC
+");
+if($ask->num_rows) {
+    while($row = $ask->fetch_assoc()) {
+        $arr[] = $row;
+    }
+}
+
+?>
   <main>
     <nav class="nav">
         <?=include_template('listCats.php', ['cats'=>$cats])?>
@@ -17,16 +50,7 @@ $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
             <img src="../<?=$two_cats['img']?>" width="730" height="548" alt="<?=$two_cats['name']?>">
           </div>
           <p class="lot-item__category">Категория: <span><?=$two_cats['CAT_NAME']?></span></p>
-          <p class="lot-item__description">Легкий маневренный сноуборд, готовый дать жару в любом парке, растопив
-            снег
-            мощным щелчкоми четкими дугами. Стекловолокно Bi-Ax, уложенное в двух направлениях, наделяет этот
-            снаряд
-            отличной гибкостью и отзывчивостью, а симметричная геометрия в сочетании с классическим прогибом
-            кэмбер
-            позволит уверенно держать высокие скорости. А если к концу катального дня сил совсем не останется,
-            просто
-            посмотрите на Вашу доску и улыбнитесь, крутая графика от Шона Кливера еще никого не оставляла
-            равнодушным.</p>
+          <p class="lot-item__description"><?=out_secur($two_cats['text'])?></p>
         </div>
         <div class="lot-item__right">
           <div class="lot-item__state">
@@ -40,78 +64,38 @@ $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost">10 999</span>
+                <span class="lot-item__cost"><?=format_cost($two_cats['begin_cost'])?></span>
               </div>
-              <div class="lot-item__min-cost">
-Мин. ставка <span>12 000 р</span>
+              <div class="lot-item__min-cost">Мин. ставка +<span><?=format_cost($two_cats['cost'])?></span>
               </div>
             </div>
-            <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
-              <p class="lot-item__form-item form__item form__item--invalid">
+            <form class="lot-item__form" method="post" autocomplete="off">
+              <p class="lot-item__form-item form__item <?php if(isset($errors)) { echo 'form__item--invalid'; } ?>"> <!--  form__item--invalid --!>
                 <label for="cost">Ваша ставка</label>
-                <input id="cost" type="text" name="cost" placeholder="12 000">
-                <span class="form__error">Введите наименование лота</span>
+                <input id="cost" type="text" name="cost" value="<?=@$_POST['cost']?>" placeholder="<?=format_cost_count(((int)$two_cats['cost']+(int)$two_cats['begin_cost']))?>">
+                <span class="form__error">Введите коректную ставку</span>
               </p>
-              <button type="submit" class="button">Сделать ставку</button>
+              <button type="submit" name="create-rate" class="button">Сделать ставку</button>
             </form>
           </div>
           <div class="history">
-            <h3>История ставок (<span>10</span>)</h3>
-            <table class="history__list">
-              <tr class="history__item">
-                <td class="history__name">Иван</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">5 минут назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Константин</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">20 минут назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Евгений</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">Час назад</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Игорь</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 08:21</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Енакентий</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 13:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Семён</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 12:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Илья</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 10:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Енакентий</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 13:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Семён</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 12:20</td>
-              </tr>
-              <tr class="history__item">
-                <td class="history__name">Илья</td>
-                <td class="history__price">10 999 р</td>
-                <td class="history__time">19.03.17 в 10:20</td>
-              </tr>
-            </table>
+            <h3>История ставок (<span><?=isset($arr) ? count($arr) : 0; ?></span>)</h3>
+              <?php if(isset($arr)): ?>
+                <table class="history__list">
+                    <?php foreach($arr as $v): ?>
+                      <tr class="history__item">
+                        <td class="history__name"><?=out_secur($v['login'])?></td>
+                        <td class="history__price"><?=format_cost((int)$v['lot_cost'])?></td>
+                        <td class="history__time"><?=format_old_time($v['datatime'])?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                </table>
+              <?php endif; ?>
           </div>
         </div>
       </div>
     </section>
   </main>
-</div>
+
+<script src="../rbs.js"></script>
+

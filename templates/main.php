@@ -6,7 +6,7 @@
             <?php foreach($cats as $v): ?>
                 <!--заполните этот список из массива категорий-->
                 <li class="promo__item promo__item--<?=$v['code']?>">
-                    <a class="promo__link" href="pages/all-lots.html"><?=out_secur($v['name'])?></a>
+                    <a class="promo__link" href="/all-lots?cat=<?=$v['code']?>"><?=out_secur($v['name'])?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -29,8 +29,8 @@
                         <h3 class="lot__title"><a class="text-link" href="/lot/<?=$v['id']?>"><?=out_secur($v['name'])?></a></h3>
                         <div class="lot__state">
                             <div class="lot__rate">
-                                <span class="lot__amount"><?=format_cost($v['begin_cost'])?></span>
-                                <span class="lot__cost"><?=format_cost($v['cost'])?></span>
+                                <span class="lot__amount"><?=format_cost($v['cost'])?></span>
+                                <span class="lot__cost"><?=format_cost($v['begin_cost'])?></span>
                             </div>
                             <div class="lot__timer timer <?php if((int)$end_time[0] < 1) { echo 'timer--finishing'; } ?>">
                                 <?php if((int)$end_time[0] < 24) { ?>
