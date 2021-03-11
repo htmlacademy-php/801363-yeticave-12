@@ -43,6 +43,7 @@ if(isset($_SESSION['user'])) {
     $is_auth = 1;
     $user_name = $_SESSION['user']['login']; // укажите здесь ваше имя
 } else {
+    $user_name = '';
     $is_auth = 0;
 }
 

@@ -4,7 +4,7 @@ if(isset($_POST['create-rate'], $_SESSION['user'], $_POST['cost'], $two_cats)) {
         $errors['cost'] = true;
     } else {
         q("
-        UPDATE `lotes` SET `begin_cost` = ".((int)$two_cats['begin_cost'] + (int)$_POST['cost'])." WHERE
+        UPDATE `lotes` SET `begin_cost` = ".(int)$_POST['cost']." WHERE
         `id` = ".(int)$two_cats['id']."
         ");
 
@@ -38,7 +38,6 @@ if($ask->num_rows) {
 }
 
 ?>
-
   <main>
     <nav class="nav">
         <?=include_template('listCats.php', ['cats'=>$cats])?>
@@ -67,8 +66,7 @@ if($ask->num_rows) {
                 <span class="lot-item__amount">Текущая цена</span>
                 <span class="lot-item__cost"><?=format_cost($two_cats['begin_cost'])?></span>
               </div>
-              <div class="lot-item__min-cost">
-Мин. ставка <span><?=format_cost($two_cats['cost'])?></span>
+              <div class="lot-item__min-cost">Мин. ставка <span><?=format_cost($two_cats['cost'])?></span>
               </div>
             </div>
             <form class="lot-item__form" method="post" autocomplete="off">
