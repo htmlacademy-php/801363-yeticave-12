@@ -66,7 +66,7 @@ if($ask->num_rows) {
                 <span class="lot-item__amount">Текущая цена</span>
                 <span class="lot-item__cost"><?=format_cost($two_cats['begin_cost'])?></span>
               </div>
-              <div class="lot-item__min-cost">Мин. ставка <span><?=format_cost($two_cats['cost'])?></span>
+              <div class="lot-item__min-cost">Мин. ставка +<span><?=format_cost($two_cats['cost'])?></span>
               </div>
             </div>
             <form class="lot-item__form" method="post" autocomplete="off">
@@ -86,7 +86,7 @@ if($ask->num_rows) {
                       <tr class="history__item">
                         <td class="history__name"><?=out_secur($v['login'])?></td>
                         <td class="history__price"><?=format_cost((int)$v['lot_cost'])?></td>
-                        <td class="history__time">только что</td>
+                        <td class="history__time"><?=format_old_time($v['datatime'])?></td>
                       </tr>
                     <?php endforeach; ?>
                 </table>
@@ -96,3 +96,6 @@ if($ask->num_rows) {
       </div>
     </section>
   </main>
+
+<script src="../rbs.js"></script>
+

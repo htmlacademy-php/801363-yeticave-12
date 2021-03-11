@@ -3,6 +3,25 @@ spl_autoload_register(function ($class) {
     include './libs/class_'.$class.'.php';
 });
 
+function findArray ($ar, $findValue, $executeKeys){
+    $result = array();
+
+    foreach ($ar as $k => $v) {
+        if (is_array($ar[$k])) {
+            $second_result = findArray ($ar[$k], $findValue, $executeKeys);
+            $result = array_merge($result, $second_result);
+            continue;
+        }
+        if ($v === $findValue) {
+            foreach ($executeKeys as $val){
+                $result[] = $ar[$val];
+            }
+
+        }
+    }
+    return $result;
+}
+
 function format_time_lost($data_end) {
     $datetime1 = strtotime($data_end);
     $datetime2 = strtotime(date('Y-m-d H:i:s'));
@@ -10,6 +29,25 @@ function format_time_lost($data_end) {
     $hour = floor($interval / 3600);
     $min  = floor(($interval - $hour * 3600) / 60);
     return [$hour, $min];
+}
+
+function format_old_time($datatime) {
+    $tim = strtotime(date('Y-m-d H:i:s')) - strtotime($datatime);
+    if($tim < 60*60) {
+        $res = floor($tim/60).' минут назад';
+    } else {
+        $hour = floor($tim / 3600);
+        $min  = floor(($tim - $hour * 3600) / 60);
+
+        if($hour > 24) {
+            $res = 'Более суток назад';
+        } else {
+            $res = $hour.'ч. '.$min.'мин. назад';
+        }
+    }
+    if($tim < 5*60) { $res = 'Только что'; }
+
+    return $res;
 }
 
 function format_cost($cost=0) {

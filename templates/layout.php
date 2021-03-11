@@ -21,13 +21,13 @@
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <?php if($is_auth): ?>
-            <a class="main-header__add-lot button" href="add">Добавить лот</a>
+            <a class="main-header__add-lot button" href="/add">Добавить лот</a>
             <?php endif; ?>
             <nav class="user-menu">
                 <?php if($is_auth === 1) { ?>
                     <div class="user-menu__logged">
                         <p><?=$user_name?></p>
-                        <a class="user-menu__bets" href="pages/my-bets.html">Мои ставки</a>
+                        <a class="user-menu__bets" href="/my-bets">Мои ставки</a>
                         <a class="user-menu__logout" href="logout">Выход</a>
                     </div>
                 <?php } else { ?>
@@ -54,7 +54,7 @@
             <!--заполните этот список из массива категорий-->
             <?php foreach($cats as $v) : ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?=out_secur($v['name'])?></a>
+                    <a href="/all-lots?cat=<?=$v['code']?>"><?=out_secur($v['name'])?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -87,7 +87,7 @@
             </a>
         </div>
         <?php if($is_auth): ?>
-        <a class="main-footer__add-lot button" href="add">Добавить лот</a>
+        <a class="main-footer__add-lot button" href="/add">Добавить лот</a>
         <?php endif; ?>
         <div class="main-footer__developed-by">
             <span class="visually-hidden">Разработано:</span>
@@ -103,7 +103,6 @@
     </div>
 </footer>
 
-<script src="../rbs.js"></script>
 <script src="../flatpickr.js"></script>
 <script src="../script.js"></script>
 </body>
