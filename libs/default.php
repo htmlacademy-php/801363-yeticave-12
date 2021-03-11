@@ -31,6 +31,12 @@ function format_time_lost($data_end) {
     return [$hour, $min];
 }
 
+function mail_creator($array=[]) {
+    ob_start();
+    echo include_template('email.php', ['login'=>$array['login'], 'lot_id'=>$array['lot_id'], 'lot_name'=>$array['lot_name']]);
+    return ob_get_contents();
+}
+
 function format_old_time($datatime) {
     $tim = strtotime(date('Y-m-d H:i:s')) - strtotime($datatime);
     if($tim < 60*60) {

@@ -19,9 +19,9 @@ if($ask->num_rows) {
             q("
             UPDATE `lotes` SET `id_winer` = ".(int)$row['ID_RATES']." WHERE `id` = ".(int)$row['id_lot']."
             ");
-            //sendMail();
         }
     }
 
+    $mess = mail_creator(['login'=>'robuon', 'lot_id'=>21, 'lot_name'=>'SUPER PUPER']);
 //    wtf($wins);
 }
