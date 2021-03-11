@@ -23,7 +23,8 @@ if(isset($_POST['submit-login'])) {
         `descr`            = '".db_secur($_POST['message'])."'
         ");
 
-
+    header('Location: /login');
+    exit;
     }
 }
 ?>
