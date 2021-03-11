@@ -1,0 +1,13 @@
+{
+    "name": "yeticave/git",
+    "description": "website for internet shop",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RobinStone",
+            "email": "vohuanrok@mail.ru"
+        }
+    ],
+    "require": {}
+}
