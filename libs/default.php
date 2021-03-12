@@ -34,7 +34,9 @@ function format_time_lost($data_end) {
 function mail_creator($array=[]) {
     ob_start();
     echo include_template('email.php', ['cash'=>$array['cash'], 'login'=>$array['login'], 'lot_id'=>$array['lot_id'], 'lot_name'=>$array['lot_name']]);
-    return ob_get_contents();
+    $mailBody = ob_get_contents();
+    ob_clean();
+    return $mailBody;
 }
 
 function format_old_time($datatime) {
