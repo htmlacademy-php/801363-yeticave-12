@@ -7,7 +7,6 @@ WHERE `date_end` < NOW() AND `id_winer` = -1
 ORDER BY rates.datatime DESC
 ");
 if($ask->num_rows) {
-    require('vendor/autoload.php');
     $wins = [];
     while($row = $ask->fetch_assoc()) {
         $exist = false;
@@ -25,13 +24,13 @@ if($ask->num_rows) {
             $mess = mail_creator(['login'=>$row['login'], 'lot_id'=>(int)$row['id_lot'], 'lot_name'=>$row['name'], 'cash'=>(int)$row['lot_cost']]);
 
             // Конфигурация траспорта
-            $transport = new Swift_SmtpTransport('smtp.example.org', 25);
+            $transport = new Swift_SmtpTransport('phpdemo.ru', 25);
 
             // Формирование сообщения
             $message = new Swift_Message("Ваша ставка победила");
             $message->setTo([$row['email'] => $row['login']]);
             $message->setBody($mess);
-            $message->setFrom("keks@phpdemo.ru", "YetuCave");
+            $message->setFrom("keks@phpdemo.ru", "keks@phpdemo.ru");
 
             // Отправка сообщения
             $mailer = new Swift_Mailer($transport);
