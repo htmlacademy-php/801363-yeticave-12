@@ -33,7 +33,7 @@ function format_time_lost($data_end) {
 
 function mail_creator($array=[]) {
     ob_start();
-    echo include_template('email.php', ['login'=>$array['login'], 'lot_id'=>$array['lot_id'], 'lot_name'=>$array['lot_name']]);
+    echo include_template('email.php', ['cash'=>$array['cash'], 'login'=>$array['login'], 'lot_id'=>$array['lot_id'], 'lot_name'=>$array['lot_name']]);
     return ob_get_contents();
 }
 
@@ -72,6 +72,11 @@ function format_cost_count($cost=0) {
     return $ans;
 }
 
+/**
+ * @param $query
+ * @param int $key
+ * @return mysqli_result
+ */
 function q($query, $key = 0) {
     $res = DB::_($key)->query($query);
     if($res === false) {
