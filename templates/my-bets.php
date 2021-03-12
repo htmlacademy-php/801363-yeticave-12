@@ -1,16 +1,34 @@
 <?php
 $ask = q("
-SELECT rates.*, users.id AS ID_USER, lotes.id AS ID_LOTES, lotes.name, lotes.cat, lotes.img, lotes.text, lotes.date_end FROM `rates`
+SELECT rates.*, users.id AS ID_USER, lotes.id AS ID_LOTES, lotes.name, lotes.cat, lotes.img, lotes.text, lotes.date_end, lotes.id_winer, lotes.id_parent, lotes.sended, categorys.id AS ID_CAT, categorys.name AS CAT_NAME  FROM `rates`
 LEFT JOIN `users` ON rates.id_user = users.id
 LEFT JOIN `lotes` ON rates.id_lot = lotes.id
-WHERE rates.id_user = ".(int)$_SESSION['user']['id']." ORDER BY lotes.date_end ASC
+LEFT JOIN `categorys` ON lotes.cat = categorys.id
+WHERE rates.id_user = ".(int)$_SESSION['user']['id']." ORDER BY lotes.date_end DESC
 ");
 
 if($ask->num_rows) {
     while($row = $ask->fetch_assoc()) {
         $arr[] = $row;
+        $id_arr[$row['id']] = ' `id` = '.$row['id_parent'];
     }
 }
+
+if(isset($id_arr, $arr)) {
+    $ask = q("
+    SELECT users.id, users.descr FROM `users` WHERE ".implode(' OR ', $id_arr)."
+    ");
+    if($ask->num_rows) {
+        while($row = $ask->fetch_assoc()) {
+            $descr[$row['id']] = $row['descr'];
+        }
+        foreach($arr as $k=>$v) {
+            $arr[$k]['address'] = $descr[$v['id_parent']];
+        }
+    }
+}
+
+
 ?>
 
 <main>
@@ -26,26 +44,35 @@ if($ask->num_rows) {
                 $end_time[0] = str_pad($end_time[0], 2, "0", STR_PAD_LEFT);
                 $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
                 ?>
-            <tr class="rates__item">
+            <tr class="rates__item <?php if($v['id_winer'] == $v['id']) { echo 'rates__item--win'; } elseif((int)$end_time[0] < 0) { echo 'rates__item--end'; } ?>">
                 <td class="rates__info">
                     <div class="rates__img">
                         <img src="../<?=$v['img']?>" width="54" height="40" alt="<?=$v['name']?>">
                     </div>
-                    <h3 class="rates__title"><a href="/lot/<?=(int)$v['ID_LOTES']?>"><?=$v['name']?></a></h3>
+                    <div>
+                        <h3 class="rates__title"><a href="/lot/<?=(int)$v['ID_LOTES']?>"><?=$v['name']?></a></h3>
+                        <?php if($v['id_winer'] == $v['id']) { echo '<p>'.$v['address'].'</p>'; } ?>
+                    </div>
                 </td>
                 <td class="rates__category">
-                    Доски и лыжи
+                    <?=$v['CAT_NAME']?>
                 </td>
                 <td class="rates__timer">
-                    <div class="timer">
+                    <?php if($v['id_winer'] == $v['id']) {
+                        echo '<div class="timer timer--win">Ставка выиграла</div>';
+                    } else { ?>
+                    <div class="timer <?php if($end_time[0] < 0) { echo 'timer--end'; } elseif($end_time[0] == 0) { echo 'timer--finishing'; } ?>">
                         <?php
-                        if((int)$end_time[0] < 24) {
+                        if($end_time[0] < 0) {
+                            echo 'Торги окончены';
+                        } elseif((int)$end_time[0] < 24) {
                             echo $end_time[0].':'.$end_time[1];
                         } else {
-                            echo floor($end_time[0]/24).' сут.';
+                            echo '> '.floor($end_time[0]/24).' сут.';
                         }
                         ?>
                     </div>
+                    <?php } ?>
                 </td>
                 <td class="rates__price">
                     <?=format_cost($v['lot_cost'])?>

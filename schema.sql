@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 11 2021 г., 14:00
+-- Время создания: Мар 12 2021 г., 10:39
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.2
 
@@ -61,22 +61,24 @@ CREATE TABLE `lotes` (
   `begin_cost` int(11) NOT NULL DEFAULT '0',
   `cost` int(11) NOT NULL DEFAULT '0',
   `img` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '#',
-  `date_end` datetime NOT NULL
+  `date_end` datetime NOT NULL,
+  `id_winer` int(11) NOT NULL DEFAULT '-1',
+  `sended` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Дамп данных таблицы `lotes`
 --
 
-INSERT INTO `lotes` (`id`, `id_parent`, `name`, `cat`, `text`, `begin_cost`, `cost`, `img`, `date_end`) VALUES
-(1, 2, '2014 Rossignol District Snowboard', 1, NULL, 10999, 200, 'img/lot-1.jpg', '2021-03-11 12:20:00'),
-(2, 1, 'DC Ply Mens 2016/2017 Snowboard', 1, NULL, 159999, 50, 'img/lot-2.jpg', '2021-03-16 07:16:00'),
-(3, 1, 'Крепления Union Contact Pro 2015 года размер L/XL', 2, NULL, 16220, 20, 'img/lot-3.jpg', '2021-03-12 21:22:00'),
-(4, 2, 'Ботинки для сноуборда DC Mutiny Charocal', 3, NULL, 44300, 100, 'img/lot-4.jpg', '2021-03-11 09:47:00'),
-(5, 1, 'Куртка для сноуборда DC Mutiny Charocal', 4, NULL, 7500, 110, 'img/lot-5.jpg', '2021-03-15 14:30:00'),
-(6, 1, 'Маска Oakley Canopy', 5, NULL, 5400, 10, 'img/lot-6.jpg', '2021-03-15 21:12:00'),
-(7, 2, 'Коньки супер-пупер Charocal', 6, NULL, 12125, 25, 'img/lot-7.jpg', '2021-03-11 22:28:00'),
-(12, -1, 'Велосипедные педали', 3, 'Что-то с чем-то', 54380, 20, 'img/20210309-145016_id-125245-641685.png', '2021-03-12 00:00:00');
+INSERT INTO `lotes` (`id`, `id_parent`, `name`, `cat`, `text`, `begin_cost`, `cost`, `img`, `date_end`, `id_winer`, `sended`) VALUES
+(1, 2, '2014 Rossignol District Snowboard', 1, NULL, 11800, 200, 'img/lot-1.jpg', '2021-03-13 00:00:00', -1, 0),
+(2, 1, 'DC Ply Mens 2016/2017 Snowboard', 1, NULL, 159999, 50, 'img/lot-2.jpg', '2021-03-16 07:16:00', -1, 0),
+(3, 4, 'Крепления Union Contact Pro 2015 года размер L/XL', 2, NULL, 16220, 20, 'img/lot-3.jpg', '2021-03-13 06:00:00', -1, 0),
+(4, 2, 'Ботинки для сноуборда DC Mutiny Charocal', 3, NULL, 44400, 100, 'img/lot-4.jpg', '2021-03-12 12:47:00', -1, 0),
+(5, 1, 'Куртка для сноуборда DC Mutiny Charocal', 4, NULL, 7720, 110, 'img/lot-5.jpg', '2021-03-15 14:30:00', -1, 0),
+(6, 6, 'Маска Oakley Canopy', 5, NULL, 5460, 10, 'img/lot-6.jpg', '2021-03-12 04:00:00', -1, 0),
+(7, 2, 'Коньки супер-пупер Charocal', 6, NULL, 12180, 25, 'img/lot-7.jpg', '2021-03-12 22:28:00', -1, 0),
+(12, 6, 'Велосипедные педали', 3, 'Что-то с чем-то', 54440, 20, 'img/20210309-145016_id-125245-641685.png', '2021-03-13 07:00:00', -1, 0);
 
 -- --------------------------------------------------------
 
@@ -98,8 +100,18 @@ CREATE TABLE `rates` (
 
 INSERT INTO `rates` (`id`, `lot_cost`, `id_user`, `id_lot`) VALUES
 (12, 16200, 2, 3),
-(13, 12125, 1, 7),
-(14, 16220, 1, 3);
+(18, 5440, 3, 6),
+(19, 5450, 4, 6),
+(20, 5460, 1, 6),
+(22, 11400, 1, 1),
+(23, 11600, 3, 1),
+(24, 12180, 3, 7),
+(26, 11800, 6, 1),
+(27, 7610, 1, 5),
+(28, 7720, 6, 5),
+(29, 44400, 6, 4),
+(30, 54420, 6, 12),
+(31, 54440, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -120,9 +132,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `login`, `pass`, `descr`) VALUES
-(1, 'vohuanrok@mail.ru', 'robin', 'k4yKmL7Wmqoog', NULL),
+(1, 'vohuanrok@mail.ru', 'robin', 'k4yKmL7Wmqoog', 'Заслонова 34 тел. 343-233-32'),
 (2, 'user@mail.by', 'userminator', 'none', 'новый пользователь'),
-(3, 'robinstone2011@gmail.com', 'Robin', 'k4yKmL7Wmqoog', 'Я живу дома ))');
+(3, 'robinstone2011@gmail.com', 'Петрович', 'k4yKmL7Wmqoog', 'Я живу дома ))'),
+(4, 'robinstone2020@gmail.com', 'Олег Корнаухов', 'k4yKmL7Wmqoog', 'За углом  в подворотне д.33'),
+(5, 'vohuanrok22@mail.ru', 'Олег Корнаухов', 'k4aAUo24kcXdk', 'вапвапвапвап'),
+(6, 'masha@mail.ru', 'Маша', 'k4Q5OELL6plnE', 'Лом д44 кв 23 тел. 232-321-1');
 
 --
 -- Индексы сохранённых таблиц
@@ -173,13 +188,13 @@ ALTER TABLE `lotes`
 -- AUTO_INCREMENT для таблицы `rates`
 --
 ALTER TABLE `rates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

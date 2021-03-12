@@ -1,8 +1,11 @@
 <?php
 session_start();
+require('vendor/autoload.php');
+
 include_once './config.php';
 include_once './libs/default.php';
 include_once './helpers.php';
+include_once './getwinner.php';
 
 if(isset($_GET['route'])) {
     $arr = explode('/', $_GET['route']);
