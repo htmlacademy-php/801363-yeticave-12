@@ -1,11 +1,12 @@
 <?php
 if(isset($_SESSION['user'])) {
+    wtf('robin');
     header('Location: /');
     exit;
 }
 
 if(isset($_POST['submit-login'])) {
-    if(!isset($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) { $errors['email'] = 'Введите коректный e-mail'; }
+    if(!isset($_POST['email']) || filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) { $errors['email'] = 'Введите коректный e-mail'; }
     $ask = q("
     SELECT * FROM `users` WHERE `email` = '".db_secur($_POST['email'])."' LIMIT 1
     ");
@@ -28,7 +29,6 @@ if(isset($_POST['submit-login'])) {
     }
 }
 ?>
-
 <main>
     <nav class="nav">
         <?=include_template('listCats.php', ['cats'=>$cats])?>
