@@ -6,6 +6,7 @@ if(isset($_SESSION['user'])) {
 
 if(isset($_POST['submit-login'])) {
     if(!isset($_POST['email']) || filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false) { $errors['email'] = 'Введите коректный e-mail'; }
+    if(strlen($_POST['email']) > 45) { $errors['email'] = 'Длинна логина не может быть больше 45-ти символов'; }
     $ask = q("
     SELECT * FROM `users` WHERE `email` = '".db_secur($_POST['email'])."' LIMIT 1
     ");
