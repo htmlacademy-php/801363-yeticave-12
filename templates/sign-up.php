@@ -1,6 +1,5 @@
 <?php
 if(isset($_SESSION['user'])) {
-    wtf('robin');
     header('Location: /');
     exit;
 }
