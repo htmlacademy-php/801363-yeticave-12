@@ -127,6 +127,7 @@ function get_noun_plural_form (int $number, string $one, string $two, string $ma
  * @return string Итоговый HTML
  */
 function include_template($name, array $data = []) {
+    $controller = 'controllers/' . $name;
     $name = 'templates/' . $name;
     $result = '';
 
@@ -136,6 +137,10 @@ function include_template($name, array $data = []) {
 
     ob_start();
     extract($data);
+    if(is_readable($controller)) {
+        require $controller;
+    }
+
     require $name;
 
     $result = ob_get_clean();

@@ -44,7 +44,7 @@
         </div>
     </header>
 
-<?=include_template($content.'.php', ['cats'=>$cats, 'two_cats'=>$two_cats])?>
+<?=include_template($content.'.php', ['cats'=>$cats, 'two_cats'=>$two_cats, 'control'=>$control])?>
 
 </div>
 
