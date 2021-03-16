@@ -33,10 +33,10 @@
                 <?php } else { ?>
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
-                            <a href="sign-up">Регистрация</a>
+                            <a href="/sign-up">Регистрация</a>
                         </li>
                         <li class="user-menu__item">
-                            <a href="login">Вход</a>
+                            <a href="/login">Вход</a>
                         </li>
                     </ul>
                 <?php } ?>
@@ -44,7 +44,7 @@
         </div>
     </header>
 
-<?=include_template($content.'.php', ['cats'=>$cats, 'two_cats'=>$two_cats])?>
+<?=include_template($content.'.php', ['cats'=>$cats, 'two_cats'=>$two_cats, 'control'=>$control])?>
 
 </div>
 
