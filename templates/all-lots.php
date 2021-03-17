@@ -7,7 +7,7 @@
             <h2>Все лоты в категории <span>«<?=out_secur($cat_name[0])?>»</span></h2>
             <?php if(isset($arr)) { ?>
             <ul class="lots__list">
-                <?php foreach($arr as $k=>$v) {
+                <?php foreach($arr as $v) {
                     $end_time = format_time_lost($v['date_end']);
                     ?>
                     <li class="lots__item lot" data-end="<?=out_secur($v['date_end'])?>">
