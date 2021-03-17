@@ -4,7 +4,7 @@
     </nav>
     <div class="container">
         <section class="lots">
-            <h2>Результаты поиска по запросу «<span><?=@out_secur($_GET['search'])?></span>»</h2>
+            <h2>Результаты поиска по запросу «<span><?=!empty($_GET['search']) ? out_secur($_GET['search']) : ''?></span>»</h2>
             <?php if(isset($arr)) { ?>
             <ul class="lots__list">
                 <?php foreach($arr as $v) {

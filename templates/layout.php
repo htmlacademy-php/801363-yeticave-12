@@ -17,7 +17,7 @@
                 <img src="../img/logo.svg" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
             <form class="main-header__search" method="get" action="/search" autocomplete="off">
-                <input type="search" value="<?=@$_GET['search']?>" name="search" placeholder="Поиск лота">
+                <input type="search" value="<?=!empty($_GET['search']) ? out_secur($_GET['search']) : ''?>" name="search" placeholder="Поиск лота">
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <?php if($is_auth): ?>
@@ -26,7 +26,7 @@
             <nav class="user-menu">
                 <?php if($is_auth === 1) { ?>
                     <div class="user-menu__logged">
-                        <p><?=$user_name?></p>
+                        <p><?=out_secur($user_name)?></p>
                         <a class="user-menu__bets" href="/my-bets">Мои ставки</a>
                         <a class="user-menu__logout" href="/logout">Выход</a>
                     </div>
