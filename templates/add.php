@@ -7,7 +7,7 @@
         <div class="form__container-two">
             <div class="form__item <?php if(isset($errors['lot-name'])) { echo 'form__item--invalid'; } ?>"> <!-- form__item--invalid -->
                 <label for="lot-name">Наименование <sup>*</sup></label>
-                <input id="lot-name" type="text" name="lot-name" value="<?=@$_POST['lot-name']?>" placeholder="Введите наименование лота">
+                <input id="lot-name" type="text" name="lot-name" value="<?=!empty($_POST['lot-name']) ? out_secur($_POST['lot-name']) : ''?>" placeholder="Введите наименование лота">
                 <span class="form__error">Введите наименование лота</span>
             </div>
             <div class="form__item <?php if(isset($errors['category'])) { echo 'form__item--invalid'; } ?>">
@@ -15,7 +15,7 @@
                 <select id="category" name="category">
                     <option value="-1">Выберите категорию</option>
                     <?php foreach($cats as $v):?>
-                    <option value="<?=(int)$v['id']?>" <?php if(isset($_POST['category']) && $_POST['category'] === $v['id']) { echo 'selected'; } ?>><?=$v['name']?></option>
+                    <option value="<?=(int)$v['id']?>" <?php if(isset($_POST['category']) && $_POST['category'] === $v['id']) { echo 'selected'; } ?>><?=out_secur($v['name'])?></option>
                     <?php endforeach; ?>
                 </select>
                 <span class="form__error">Выберите категорию</span>
@@ -23,7 +23,7 @@
         </div>
         <div class="form__item form__item--wide <?php if(isset($errors['message'])) { echo 'form__item--invalid'; } ?>">
             <label for="message">Описание <sup>*</sup></label>
-            <textarea id="message" name="message" placeholder="Напишите описание лота"><?=@$_POST['message']?></textarea>
+            <textarea id="message" name="message" placeholder="Напишите описание лота"><?=!empty($_POST['message']) ? out_secur($_POST['message']) : ''?></textarea>
             <span class="form__error">Напишите описание лота</span>
         </div>
         <div class="form__item form__item--file <?php if(isset($errors['lot-img'])) { echo 'form__item--invalid'; } ?>">
@@ -39,17 +39,17 @@
         <div class="form__container-three">
             <div class="form__item form__item--small <?php if(isset($errors['lot-rate'])) { echo 'form__item--invalid'; } ?>">
                 <label for="lot-rate">Начальная цена <sup>*</sup></label>
-                <input id="lot-rate" type="text" name="lot-rate" value="<?=@$_POST['lot-rate']?>" placeholder="0">
+                <input id="lot-rate" type="text" name="lot-rate" value="<?=!empty($_POST['lot-rate']) ? out_secur($_POST['lot-rate']) : ''?>" placeholder="0">
                 <span class="form__error">Введите начальную цену</span>
             </div>
             <div class="form__item form__item--small <?php if(isset($errors['lot-step'])) { echo 'form__item--invalid'; } ?>">
                 <label for="lot-step">Шаг ставки <sup>*</sup></label>
-                <input id="lot-step" type="text" name="lot-step" value="<?=@$_POST['lot-step']?>" placeholder="0">
+                <input id="lot-step" type="text" name="lot-step" value="<?=!empty($_POST['lot-step']) ? out_secur($_POST['lot-step']) : ''?>" placeholder="0">
                 <span class="form__error">Введите шаг ставки</span>
             </div>
             <div class="form__item <?php if(isset($errors['lot-date'])) { echo 'form__item--invalid'; } ?>">
                 <label for="lot-date">Дата окончания торгов <sup>*</sup></label>
-                <input class="form__input-date" id="lot-date" type="text" name="lot-date" value="<?=@$_POST['lot-date']?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
+                <input class="form__input-date" id="lot-date" type="text" name="lot-date" value="<?=!empty($_POST['lot-date']) ? out_secur($_POST['lot-date']) : ''?>" placeholder="Введите дату в формате ГГГГ-ММ-ДД">
                 <span class="form__error">Введите дату завершения торгов</span>
             </div>
         </div>

@@ -17,7 +17,7 @@
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <?php foreach($two_cats as $k=>$v) {
+            <?php foreach($two_cats as $v) {
                 $end_time = format_time_lost($v['date_end']);
                 ?>
                 <li class="lots__item lot" data-end="<?=out_secur($v['date_end'])?>">
