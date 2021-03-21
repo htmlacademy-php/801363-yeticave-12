@@ -10,21 +10,7 @@ include_once './getwinner.php';
 if(isset($_GET['route'])) {
     $arr = explode('/', $_GET['route']);
     if(is_array($arr)) {
-        $i = 0;
-        foreach($arr as $k=>$v) {
-            if(empty($v)) {
-                unset($arr[$k]);
-            } else {
-                if($i === 0) {
-                    $_GET['module'] = $v;
-                } elseif($i === 1) {
-                    $_GET['page'] = $v;
-                } else {
-                    $_GET['key_'.$i] = $v;
-                }
-                ++$i;
-            }
-        }
+        $arr = transform_route($arr);
     } else {
         $_GET[] = $arr;
     }

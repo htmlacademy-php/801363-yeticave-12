@@ -2,6 +2,25 @@
 //spl_autoload_register(function ($class) {
 //    include './libs/class_'.$class.'.php';
 //});
+function transform_route($arr = []) {
+    $i = 0;
+    foreach($arr as $k=>$v) {
+        if(empty($v)) {
+            unset($arr[$k]);
+        } else {
+            if($i === 0) {
+                $_GET['module'] = $v;
+            } elseif($i === 1) {
+                $_GET['page'] = $v;
+            } else {
+                $_GET['key_'.$i] = $v;
+            }
+            ++$i;
+        }
+    }
+    return $arr;
+}
+
 function findArray ($ar, $findValue, $executeKeys){
     $result = array();
 
