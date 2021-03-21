@@ -8,7 +8,7 @@ if(isset($_POST['submit-auth'])) {
         $ask = q("
         SELECT * FROM `users` WHERE
         `email` = '".db_secur($_POST['email'])."' AND
-        `pass`  = '".crypter($_POST['password'])."'
+        `pass`  = '".password_hash($_POST['password'], PASSWORD_DEFAULT)."'
         LIMIT 1
         ");
 
