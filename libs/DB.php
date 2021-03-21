@@ -20,7 +20,7 @@ class DB {
             if(!isset(self::$connect['name'])) {
                 self::$connect['name'] = Core::$DB_NAME;
             }
-            self::$mysqli[$key] = @new mysqli(self::$connect['local'], self::$connect['login'], self::$connect['pass'], self::$connect['name']);
+            self::$mysqli[$key] = new mysqli(self::$connect['local'], self::$connect['login'], self::$connect['pass'], self::$connect['name']);
             if(mysqli_connect_errno()) {
                 echo 'Не удалось подключиться к БД';
                 exit();

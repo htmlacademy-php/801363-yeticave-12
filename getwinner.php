@@ -23,19 +23,6 @@ if($ask->num_rows) {
             Mail::$headers = 'Ваша ставка победила';
             Mail::send($mess);
 
-//            // Конфигурация траспорта
-//            $transport = new Swift_SmtpTransport('smtp.phpdemo.ru', 25);
-//
-//            // Формирование сообщения
-//            $message = new Swift_Message("Ваша ставка победила");
-//            $message->setTo([$row['email'] => $row['login']]);
-//            $message->setBody($mess);
-//            $message->setFrom("keks@phpdemo.ru", "keks@phpdemo.ru");
-//
-//            // Отправка сообщения
-//            $mailer = new Swift_Mailer($transport);
-//            $mailer->send($message);
-
             q("
             UPDATE `lotes` SET `id_winer` = ".(int)$row['ID_RATES']." WHERE `id` = ".(int)$row['id_lot']."
             ");
