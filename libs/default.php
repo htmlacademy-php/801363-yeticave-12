@@ -1,8 +1,7 @@
 <?php
-spl_autoload_register(function ($class) {
-    include './libs/class_'.$class.'.php';
-});
-
+//spl_autoload_register(function ($class) {
+//    include './libs/class_'.$class.'.php';
+//});
 function findArray ($ar, $findValue, $executeKeys){
     $result = array();
 
