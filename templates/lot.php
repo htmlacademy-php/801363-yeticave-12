@@ -10,7 +10,7 @@
             <img src="../<?=!empty($two_cats['img']) ? $two_cats['img'] : 'none.svg'?>" width="730" height="548" alt="<?=!empty($two_cats['name']) ? out_secur($two_cats['name']) : ''?>">
           </div>
           <p class="lot-item__category">Категория: <span><?=!empty($two_cats['CAT_NAME']) ? out_secur($two_cats['CAT_NAME']) : '-'?></span></p>
-          <p class="lot-item__description"><?=out_secur($two_cats['text'])?></p>
+          <p class="lot-item__description"><?=out_secur(!empty($two_cats['text']) ? $two_cats['text'] : '')?></p>
         </div>
         <div class="lot-item__right">
           <div class="lot-item__state" <?php if((int)$end_time[0] < 0 || empty($_SESSION['user'])) { echo 'style="pointer-events: none; opacity: 0.4;"'; } ?>>

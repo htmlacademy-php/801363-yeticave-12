@@ -1,7 +1,4 @@
 <?php
-//spl_autoload_register(function ($class) {
-//    include './libs/class_'.$class.'.php';
-//});
 function transform_route($arr = []) {
     $i = 0;
     foreach($arr as $k=>$v) {

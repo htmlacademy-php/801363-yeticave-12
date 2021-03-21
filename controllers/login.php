@@ -14,7 +14,6 @@ if(isset($_POST['submit-auth'])) {
 
 //        wtf(password_hash($_POST['password'], PASSWORD_DEFAULT));
         if($ask->num_rows) {
-            session_start();
             $_SESSION['user'] = $ask->fetch_assoc();
 
             header('Location: /');
