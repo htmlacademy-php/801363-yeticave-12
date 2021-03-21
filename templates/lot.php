@@ -3,13 +3,13 @@
         <?=include_template('listCats.php', ['cats'=>$cats])?>
     </nav>
     <section class="lot-item container">
-      <h2><?=$two_cats['name']?></h2>
+      <h2><?=!empty($two_cats['name']) ? out_secur($two_cats['name']) : 'Не найдено'?></h2>
       <div class="lot-item__content">
         <div class="lot-item__left">
           <div class="lot-item__image">
-            <img src="../<?=$two_cats['img']?>" width="730" height="548" alt="<?=$two_cats['name']?>">
+            <img src="../<?=!empty($two_cats['img']) ? $two_cats['img'] : 'none.svg'?>" width="730" height="548" alt="<?=!empty($two_cats['name']) ? out_secur($two_cats['name']) : ''?>">
           </div>
-          <p class="lot-item__category">Категория: <span><?=$two_cats['CAT_NAME']?></span></p>
+          <p class="lot-item__category">Категория: <span><?=!empty($two_cats['CAT_NAME']) ? out_secur($two_cats['CAT_NAME']) : '-'?></span></p>
           <p class="lot-item__description"><?=out_secur($two_cats['text'])?></p>
         </div>
         <div class="lot-item__right">
@@ -24,9 +24,9 @@
             <div class="lot-item__cost-state">
               <div class="lot-item__rate">
                 <span class="lot-item__amount">Текущая цена</span>
-                <span class="lot-item__cost"><?=format_cost($two_cats['begin_cost'])?></span>
+                <span class="lot-item__cost"><?=format_cost(!empty($two_cats['begin_cost']) ? $two_cats['begin_cost'] : '0')?></span>
               </div>
-              <div class="lot-item__min-cost">Мин. ставка +<span><?=format_cost($two_cats['cost'])?></span>
+              <div class="lot-item__min-cost">Мин. ставка +<span><?=format_cost(!empty($two_cats['cost']) ? $two_cats['cost'] : '0')?></span>
               </div>
             </div>
             <form class="lot-item__form" method="post" autocomplete="off">
