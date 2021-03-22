@@ -19,7 +19,7 @@ if(isset($_POST['submit-login'])) {
         q("
         INSERT INTO `users` SET
         `login`            = '".db_secur($_POST['name'])."',
-        `pass`             = '".password_hash($_POST['password'], PASSWORD_DEFAULT, Core::$SALT)."',
+        `pass`             = '".password_hash($_POST['password'], PASSWORD_DEFAULT, ['salt'=>Core::$SALT])."',
         `email`            = '".db_secur($_POST['email'])."',
         `descr`            = '".db_secur($_POST['message'])."'
         ");

@@ -9,6 +9,6 @@ class Core {
     static $DB_PASS = 'mysql';
     static $DB_LOCAL = 'localhost';
 
-    static $SALT = 'fkj42io3+#2fsm92';
+    static $SALT = 'fkj42io3+#2fs4fthhem92';
 }
 
