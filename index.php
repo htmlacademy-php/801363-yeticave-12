@@ -7,19 +7,19 @@ include_once './libs/default.php';
 include_once './helpers.php';
 include_once './getwinner.php';
 
-if(isset($_GET['route'])) {
+if (isset($_GET['route'])) {
     $arr = explode('/', $_GET['route']);
-    if(is_array($arr)) {
+    if (is_array($arr)) {
         $GET_EDIT = transform_route($arr);
     } else {
         $GET_EDIT[] = $arr;
     }
 }
 
-if(empty($GET_EDIT['module'])) {
+if (empty($GET_EDIT['module'])) {
     $GET_EDIT['module'] = 'main';
 }
-if(empty($GET_EDIT['page'])) {
+if (empty($GET_EDIT['page'])) {
     $GET_EDIT['page'] = 'main';
 }
 
@@ -27,7 +27,7 @@ if(empty($GET_EDIT['page'])) {
 
 $page_name = 'Главная';
 
-if(isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])) {
     $is_auth = 1;
     $user_name = $_SESSION['user']['login']; // укажите здесь ваше имя
 } else {
@@ -40,7 +40,7 @@ $cats = [];
 $ask = q("
 SELECT * FROM `categorys`
 ");
-if($ask->num_rows) {
+if ($ask->num_rows) {
     while($row = $ask->fetch_assoc()) {
         $cats[] = $row;
     }
@@ -57,7 +57,7 @@ switch($GET_EDIT['module']) {
             ORDER BY lotes.date_end ASC
         ");
 
-        if($ask->num_rows) {
+        if ($ask->num_rows) {
             while($row = $ask->fetch_assoc())  {
                 $two_cats[] = $row;
             }
@@ -70,7 +70,7 @@ switch($GET_EDIT['module']) {
             WHERE lotes.id = ".(int)$GET_EDIT['page']."
             LIMIT 1
         ");
-        if($ask->num_rows) {
+        if ($ask->num_rows) {
             $two_cats = $ask->fetch_assoc();
         } else {
             header('HTTP/1.0 404 Not Found');
