@@ -15,26 +15,13 @@ if($ask->num_rows) {
                 $exist = true;
             }
         }
-        if($exist === false) {
+        if($exist === false && strlen($row['login']) !== 0) { // проверяет что по порошествию времени у лота есть покупатель
             $wins[] = $row;
             $mess = mail_creator(['login'=>$row['login'], 'lot_id'=>(int)$row['id_lot'], 'lot_name'=>$row['name'], 'cash'=>(int)$row['lot_cost']]);
 
             Mail::$to = $row['email'];
             Mail::$headers = 'Ваша ставка победила';
             Mail::send($mess);
-
-//            // Конфигурация траспорта
-//            $transport = new Swift_SmtpTransport('smtp.phpdemo.ru', 25);
-//
-//            // Формирование сообщения
-//            $message = new Swift_Message("Ваша ставка победила");
-//            $message->setTo([$row['email'] => $row['login']]);
-//            $message->setBody($mess);
-//            $message->setFrom("keks@phpdemo.ru", "keks@phpdemo.ru");
-//
-//            // Отправка сообщения
-//            $mailer = new Swift_Mailer($transport);
-//            $mailer->send($message);
 
             q("
             UPDATE `lotes` SET `id_winer` = ".(int)$row['ID_RATES']." WHERE `id` = ".(int)$row['id_lot']."

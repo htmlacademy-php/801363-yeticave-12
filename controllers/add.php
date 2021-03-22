@@ -5,17 +5,17 @@ if(!isset($_SESSION['user'])) {
 }
 //wtf($_POST);
 if(isset($_POST['submit-lot'])) {
-    if(empty($_POST['lot-name'])) { $errors['lot-name'] = true; }
-    if(empty($_POST['category']) || (int)$_POST['category'] == -1) { $errors['category'] = true; }
-    if(empty($_POST['message'])) { $errors['message'] = true; }
-    if(empty($_POST['lot-rate']) || (int)$_POST['lot-rate'] == 0) { $errors['lot-rate'] = true; }
-    if(empty($_POST['lot-step']) || (int)$_POST['lot-step'] == 0) { $errors['lot-step'] = true; }
-    if(empty($_POST['lot-date']) || $_POST['lot-date'] <= date('Y-m-d')) { $errors['lot-date'] = true; }
+    if(empty($_POST['lot-name'])) { $errors['lot-name'] = 1; }
+    if(empty($_POST['category']) || (int)$_POST['category'] === -1) { $errors['category'] = 1; }
+    if(empty($_POST['message'])) { $errors['message'] = 1; }
+    if(empty($_POST['lot-rate']) || (int)$_POST['lot-rate'] === 0) { $errors['lot-rate'] = 1; }
+    if(empty($_POST['lot-step']) || (int)$_POST['lot-step'] === 0) { $errors['lot-step'] = 1; }
+    if(empty($_POST['lot-date']) || $_POST['lot-date'] <= date('Y-m-d')) { $errors['lot-date'] = 1; }
 
     $accept = ['image/jpeg', 'image/jpg', 'image/png'];
 
     if(!isset($_FILES) || $_FILES['lot-img']['error'] !== 0 || !in_array(mime_content_type($_FILES['lot-img']['tmp_name']), $accept)) {
-        $errors['lot-img'] = true;
+        $errors['lot-img'] = 1;
     }
 
     if(!isset($errors)) {

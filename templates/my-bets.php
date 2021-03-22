@@ -11,24 +11,24 @@
                 $end_time[0] = str_pad($end_time[0], 2, "0", STR_PAD_LEFT);
                 $end_time[1] = str_pad($end_time[1], 2, "0", STR_PAD_LEFT);
                 ?>
-            <tr class="rates__item <?php if($v['id_winer'] == $v['id']) { echo 'rates__item--win'; } elseif((int)$end_time[0] < 0) { echo 'rates__item--end'; } ?>">
+            <tr class="rates__item <?php if((int)$v['id_winer'] === (int)$v['id']) { echo 'rates__item--win'; } elseif((int)$end_time[0] < 0) { echo 'rates__item--end'; } ?>">
                 <td class="rates__info">
                     <div class="rates__img">
                         <img src="../<?=$v['img']?>" width="54" height="40" alt="<?=$v['name']?>">
                     </div>
                     <div>
                         <h3 class="rates__title"><a href="/lot/<?=(int)$v['ID_LOTES']?>"><?=$v['name']?></a></h3>
-                        <?php if($v['id_winer'] == $v['id']) { echo '<p>'.$v['address'].'</p>'; } ?>
+                        <?php if((int)$v['id_winer'] === (int)$v['id']) { echo '<p>'.$v['address'].'</p>'; } ?>
                     </div>
                 </td>
                 <td class="rates__category">
                     <?=$v['CAT_NAME']?>
                 </td>
                 <td class="rates__timer">
-                    <?php if($v['id_winer'] == $v['id']) {
+                    <?php if((int)$v['id_winer'] === (int)$v['id']) {
                         echo '<div class="timer timer--win">Ставка выиграла</div>';
                     } else { ?>
-                    <div class="timer <?php if($end_time[0] < 0) { echo 'timer--end'; } elseif($end_time[0] == 0) { echo 'timer--finishing'; } ?>">
+                    <div class="timer <?php if($end_time[0] < 0) { echo 'timer--end'; } elseif((int)$end_time[0] === 0) { echo 'timer--finishing'; } ?>">
                         <?php
                         if($end_time[0] < 0) {
                             echo 'Торги окончены';
