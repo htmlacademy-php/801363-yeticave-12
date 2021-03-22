@@ -15,7 +15,7 @@ if($ask->num_rows) {
                 $exist = true;
             }
         }
-        if($exist === false) {
+        if($exist === false && strlen($row['login']) !== 0) { // проверяет что по порошествию времени у лота есть покупатель
             $wins[] = $row;
             $mess = mail_creator(['login'=>$row['login'], 'lot_id'=>(int)$row['id_lot'], 'lot_name'=>$row['name'], 'cash'=>(int)$row['lot_cost']]);
 
