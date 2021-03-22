@@ -10,18 +10,17 @@ include_once './getwinner.php';
 if(isset($_GET['route'])) {
     $arr = explode('/', $_GET['route']);
     if(is_array($arr)) {
-        $arr = transform_route($arr);
+        $GET_EDIT = transform_route($arr);
     } else {
-        $_GET[] = $arr;
+        $GET_EDIT[] = $arr;
     }
-    unset($_GET['route']);
 }
 
-if(empty($_GET['module'])) {
-    $_GET['module'] = 'main';
+if(empty($GET_EDIT['module'])) {
+    $GET_EDIT['module'] = 'main';
 }
-if(empty($_GET['page'])) {
-    $_GET['page'] = 'main';
+if(empty($GET_EDIT['page'])) {
+    $GET_EDIT['page'] = 'main';
 }
 
 //wtf($_SESSION);
@@ -49,7 +48,7 @@ if($ask->num_rows) {
 
 $two_cats = [];
 
-switch($_GET['module']) {
+switch($GET_EDIT['module']) {
     case 'main':
         $ask = q("SELECT lotes.id, lotes.name, lotes.img, lotes.id_parent, lotes.cat, lotes.begin_cost, lotes.cost, lotes.date_end, categorys.id AS CAT_ID, categorys.name AS CAT_NAME FROM `lotes`
         LEFT JOIN `categorys`
@@ -68,7 +67,7 @@ switch($_GET['module']) {
         $ask = q("SELECT lotes.id, lotes.name, lotes.img, lotes.id_parent, lotes.cat, lotes.begin_cost, lotes.cost, lotes.date_end, categorys.id AS CAT_ID, categorys.name AS CAT_NAME FROM `lotes`
         LEFT JOIN `categorys`
             ON lotes.cat = categorys.id
-            WHERE lotes.id = ".(int)$_GET['page']."
+            WHERE lotes.id = ".(int)$GET_EDIT['page']."
             LIMIT 1
         ");
         if($ask->num_rows) {
@@ -82,4 +81,4 @@ switch($_GET['module']) {
 }
 
 
-echo include_template('layout.php', ['content'=>$_GET['module'], 'page_name'=>$page_name, 'user_name'=>$user_name, 'is_auth'=>$is_auth, 'cats'=>$cats, 'two_cats'=>$two_cats]);
+echo include_template('layout.php', ['content'=>$GET_EDIT['module'], 'page_name'=>$page_name, 'user_name'=>$user_name, 'is_auth'=>$is_auth, 'cats'=>$cats, 'two_cats'=>$two_cats]);

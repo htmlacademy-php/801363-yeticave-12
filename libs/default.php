@@ -6,11 +6,11 @@ function transform_route($arr = []) {
             unset($arr[$k]);
         } else {
             if($i === 0) {
-                $_GET['module'] = $v;
+                $arr['module'] = $v;
             } elseif($i === 1) {
-                $_GET['page'] = $v;
+                $arr['page'] = $v;
             } else {
-                $_GET['key_'.$i] = $v;
+                $arr['key_'.$i] = $v;
             }
             ++$i;
         }
@@ -99,13 +99,10 @@ function q($query, $key = 0) {
         wtf($info, 1);
         echo 'ФАЙЛ - '.$info[0]['file'].'<br>СТРОКА - '.$info[0]['line'];
         echo '</div>';
-        $error = 'Ошибка в запросе: '.date('Y-m-d h:i:s')."\n".$query."\n\n".'ФАЙЛ - '.$info[0]['file']."\n".'СТРОКА - '.$info[0]['line']."\n".'=======================================================';
-        file_put_contents('./logs/query_errors.txt', $error."\n\n", FILE_APPEND);
         $_SESSION['errors'][] = 'ошибка в запросе';
         return false;
-    } else {
-        return $res;
     }
+    return $res;
 }
 
 function wtf($array, $stop = false) {
