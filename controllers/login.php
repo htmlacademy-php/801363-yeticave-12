@@ -8,11 +8,10 @@ if(isset($_POST['submit-auth'])) {
         $ask = q("
         SELECT * FROM `users` WHERE
         `email` = '".db_secur($_POST['email'])."' AND
-        `pass`  = '".password_hash($_POST['password'], PASSWORD_DEFAULT, Core::$SALT)."'
+        `pass`  = '".password_hash($_POST['password'], PASSWORD_DEFAULT, ['salt'=>Core::$SALT])."'
         LIMIT 1
         ");
 
-//        wtf(password_hash($_POST['password'], PASSWORD_DEFAULT));
         if($ask->num_rows) {
             $_SESSION['user'] = $ask->fetch_assoc();
 
