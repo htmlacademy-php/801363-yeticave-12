@@ -1,4 +1,11 @@
 <?php
+/**
+ * Создаёт настроенный ЧПУ
+ *
+ * @param array $arr массив из глобальной переменной $_GET
+ *
+ * @return array возвращает массив-структуру в виде module, page
+ */
 function transform_route($arr = []) {
     $i = 0;
     foreach($arr as $k=>$v) {
@@ -18,6 +25,15 @@ function transform_route($arr = []) {
     return $arr;
 }
 
+/**
+ * Поиск в массиве
+ *
+ * @param array $ar сам массив
+ * @param string $findValue искомое значение
+ * @param string $executeKeys ключи
+ *
+ * @return array возвращает массив
+ */
 function findArray ($ar, $findValue, $executeKeys){
     $result = array();
 
@@ -37,6 +53,13 @@ function findArray ($ar, $findValue, $executeKeys){
     return $result;
 }
 
+/**
+ * Форматирование времени
+ *
+ * @param string $data_end метка времени
+ *
+ * @return array возвращает массив ЧЧ:ММ
+ */
 function format_time_lost($data_end) {
     $datetime1 = strtotime($data_end);
     $datetime2 = strtotime(date('Y-m-d H:i:s'));
@@ -46,10 +69,24 @@ function format_time_lost($data_end) {
     return [$hour, $min];
 }
 
+/**
+ * Форматирование тела письма
+ *
+ * @param array $array массив с ключами ('cash' - цена лота, 'login' - имя пользователя, 'lot_id' - id выигрышного лота, 'lot_name' - название лота)
+ *
+ * @return string возвращает текст письма
+ */
 function mail_creator($array=[]) {
     return include_template('email.php', ['cash'=>$array['cash'], 'login'=>$array['login'], 'lot_id'=>$array['lot_id'], 'lot_name'=>$array['lot_name']]);
 }
 
+/**
+ * Форматирование метки времени прошедшего с подачи заявки
+ *
+ * @param string $datatime метка времени
+ *
+ * @return string возвращает метку в удобно-читаемом виде
+ */
 function format_old_time($datatime) {
     $tim = strtotime(date('Y-m-d H:i:s')) - strtotime($datatime);
     if($tim < 60*60) {
@@ -69,6 +106,13 @@ function format_old_time($datatime) {
     return $res;
 }
 
+/**
+ * Форматирование цены (разделение тысяч пробелом и подстановка в конце символа $)
+ *
+ * @param int $cost стоимость
+ *
+ * @return string возвращает цену в удобно-читаемом виде
+ */
 function format_cost($cost=0) {
     $ans = ceil($cost);
     if($ans >= 1000) {
@@ -77,6 +121,14 @@ function format_cost($cost=0) {
     $ans .=' $';  // рубль плохо отображается даже у меня, заменил на $
     return $ans;
 }
+
+/**
+ * Форматирование цены (разделение тысяч пробелом)
+ *
+ * @param int $cost стоимость
+ *
+ * @return string возвращает цену в удобно-читаемом виде
+ */
 function format_cost_count($cost=0) {
     $ans = ceil($cost);
     if($ans >= 1000) {
@@ -105,6 +157,13 @@ function q($query, $key = 0) {
     return $res;
 }
 
+/**
+ * Отладочная функция служит для вывода вложенных массивов в удобном виде
+ *
+ * @param array $array данные для вывода
+ * @param boolean $stop если установлено в true - продолжает выполнение скрипта, если оставлено по умолчанию - работа скрипта будет прервана
+ *
+ */
 function wtf($array, $stop = false) {
     echo '<pre style="font-size: 13px; line-height: 16px">'.print_r($array,1).'</pre>';
     if(!$stop) {
@@ -112,6 +171,13 @@ function wtf($array, $stop = false) {
     }
 }
 
+/**
+ * Защита выводимых переменных от атак
+ *
+ * @param array|string $var выводимая переменная
+ *
+ * @return array|string возвращает переданную переменную в обработанном "безопасном виде"
+ */
 function out_secur($var) {
     if(!is_array($var)) {
         $var = htmlspecialchars($var);
@@ -121,6 +187,14 @@ function out_secur($var) {
     return $var;
 }
 
+/**
+ * Защита переменных от sql атак
+ *
+ * @param array|string $var переменная
+ * @param int $key (не обязательная) работает со списком подключений к  БД
+ *
+ * @return array|string возвращает переданную переменную в обработанном "безопасном виде"
+ */
 function db_secur($var, $key = 0) {
     if(!is_array($var)) {
         $var = DB::_($key)->real_escape_string($var);
@@ -130,6 +204,13 @@ function db_secur($var, $key = 0) {
     return $var;
 }
 
+/**
+ * Обрезает пробелы в начале и в конце
+ *
+ * @param array|string $var переменная
+ *
+ * @return array|string возвращает переданную переменную в обработанном виде
+ */
 function trimAll($var) {
     if(!is_array($var)) {
         $var = trim($var);
@@ -139,8 +220,3 @@ function trimAll($var) {
     return $var;
 }
 
-function crypter($var) {
-    $salt1 = 'v5kmj4d9K&k3;dee7h40';
-    $salt2 = 'k4pPN^lP(h3f32ls657v';
-    return crypt(md5($salt2.$var.$salt1), $salt2);
-}
